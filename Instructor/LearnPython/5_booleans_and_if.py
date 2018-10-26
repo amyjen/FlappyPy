@@ -18,7 +18,7 @@ time = "8:00 AM"
 
 if time == "8:00 AM":
     print("Time for some breakfast")
-else if time == "1:00 PM":
+elif time == "1:00 PM":
     print("Time for some Lunch")
 elif time == "6:00 PM":                 #elif means else if
     print("Time for some Dinner")
