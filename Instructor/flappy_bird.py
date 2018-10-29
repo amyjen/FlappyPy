@@ -4,7 +4,7 @@ from flappy_func import *
 WIDTH = 400
 HEIGHT = 708
 start_position=(WIDTH/5, HEIGHT/3)
-#global frame,speed,is_down,started_game,ground,pipes,score,highscore,game_over
+
 frame=0
 speed=0
 is_down=False
@@ -42,7 +42,7 @@ def hit_pipe():
                 return True
     return False
 
-def reset_game():
+def die():
     global frame,speed,is_down,started_game,ground,pipes,score,highscore,game_over
     frame=-60
     speed=-5
@@ -56,6 +56,15 @@ def reset_game():
 
     sounds.die.play()
     bird.image = 'birddead'
+
+def reset_game():
+    global frame,speed,is_down,started_game,ground,pipes,score,highscore,game_over
+    pipes=[]
+    speed=0
+    score=0
+    game_over=False
+    bird.image='bird0'
+    bird.pos=start_position
 
 def draw():
     screen.blit('background', (0,0))
@@ -95,16 +104,10 @@ def update():
             sounds.point.play()
         if (bird.top < 0 or hit_pipe() or hit_ground()):
             sounds.hit.play()
-            reset_game()
+            die()
         if score > highscore:
             highscore = score
-
     if frame == 0:
-        pipes=[]
-        speed=0
-        score=0
-        game_over=False
-        bird.image='bird0'
-        bird.pos=start_position
+        reset_game()
 
 pgzrun.go() #do not remove and leave as last line of code
