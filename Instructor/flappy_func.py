@@ -56,11 +56,11 @@ def spawn_pipes(pipes):
     pipes.append((top,bottom))
     return pipes
 
-def get_high_score():
+def get_record():
     filename = os.getcwd() + r'\FlappyPy\Instructor\highscore.txt'
     with open(filename, 'r') as file:
         return int(file.readline())
-def set_high_score(score):
+def set_record(score):
     filename = os.getcwd() + r'\FlappyPy\Instructor\highscore.txt'
     with open(filename, 'w') as file:
         file.write(str(score))

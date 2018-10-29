@@ -12,7 +12,7 @@ started_game=False
 ground=[]
 pipes=[]
 score=0
-highscore=get_high_score()
+highscore=get_record()
 game_over=False
 
 bird = Actor('bird0')
@@ -24,7 +24,7 @@ def fall():
     speed+=.5
     bird.angle = 3*(3-speed)#looks better
 
-def move_pipes():
+def move_pipes(pipes):
     for pipe_pair in pipes:
         for pipe in pipe_pair:
             pipe.x-=3
@@ -51,9 +51,8 @@ def reset_game():
     #ground=[]
     #pipes=[]
     #score=0
-    highscore=get_high_score()
+    set_record(highscore)
     game_over=True
-    set_high_score(highscore)
 
     sounds.die.play()
     bird.image = 'birddead'
@@ -88,9 +87,9 @@ def update():
         fall()
     if started_game:
         fall()
+        move_pipes(pipes)
         if frame % 100 == 0:
             spawn_pipes(pipes)
-        move_pipes()
         if pass_pipe(pipes):
             score+=1
             sounds.point.play()
