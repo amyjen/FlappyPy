@@ -4,16 +4,16 @@ from flappy_func import *
 WIDTH = 400
 HEIGHT = 708
 start_position=(WIDTH/5, HEIGHT/3)
-#global frame,speed,score,started_game,game_over,is_down,pipes,ground,highscore
-frame = 0
-speed = 0
-score = 0
-started_game = False
-game_over = False
-is_down = False
-pipes = []
-ground = []
-highscore = get_high_score()
+#global frame,speed,is_down,started_game,ground,pipes,score,highscore,game_over
+frame=0
+speed=0
+is_down=False
+started_game=False
+ground=[]
+pipes=[]
+score=0
+highscore=get_high_score()
+game_over=False
 
 bird = Actor('bird0')
 bird.pos=start_position
@@ -43,16 +43,20 @@ def hit_pipe():
     return False
 
 def reset_game():
-    global speed,frame,started_game,is_down,score,ground,highscore,game_over,pipes
-    frame = -60
-    speed = -5
-    #score = 0
-    started_game = False
-    game_over = True
-    is_down = False
-    #ground removed
-    #pipes removed
+    global frame,speed,is_down,started_game,ground,pipes,score,highscore,game_over
+    frame=-60
+    speed=-5
+    is_down=False
+    started_game=False
+    #ground=[]
+    #pipes=[]
+    #score=0
+    highscore=get_high_score()
+    game_over=True
     set_high_score(highscore)
+
+    sounds.die.play()
+    bird.image = 'birddead'
 
 def draw():
     screen.blit('background', (0,0))
@@ -66,7 +70,7 @@ def draw():
     draw_highscore(screen,highscore)
 
 def update():
-    global frame,speed,score,started_game,game_over,is_down,pipes,ground,highscore
+    global frame,speed,is_down,started_game,ground,pipes,score,highscore,game_over
     frame+=1
     if not game_over:
         if keyboard.space:
@@ -80,23 +84,19 @@ def update():
         if frame % 4 == 0:
             animate(bird)
         move_ground(ground)
-
-        if pass_pipe(pipes):
-            score+=1
-            sounds.point.play()
-
-        if (bird.top < 0 or hit_pipe() or hit_ground()):
-            sounds.hit.play()
-            sounds.die.play()
-            bird.image = 'birddead'
-            reset_game()
     else:
         fall()
     if started_game:
+        fall()
         if frame % 100 == 0:
             spawn_pipes(pipes)
-        fall()
         move_pipes()
+        if pass_pipe(pipes):
+            score+=1
+            sounds.point.play()
+        if (bird.top < 0 or hit_pipe() or hit_ground()):
+            sounds.hit.play()
+            reset_game()
         if score > highscore:
             highscore = score
 
