@@ -1,3 +1,4 @@
+
 pie_slices = 8 #creates varialbe effectively the amount of times we will loop
 
 while pie_slices > 0: #will loop as long as condition is true

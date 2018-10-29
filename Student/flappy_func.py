@@ -8,13 +8,13 @@ WIDTH = 0
 HEIGHT = 0
 pipe_gap=180
 
-def next_image(bird):
+def animate(bird):
     if bird.image == 'birddead':
-        bird.image = 'bird/0'
+        bird.image = 'bird0'
     else:
         image_num = int(bird.image[-1])
         image_num = (image_num + 1) % 4
-        bird.image="bird/"+str(image_num)
+        bird.image="bird"+str(image_num)
 
 def move_ground(grounds):
     WIDTH = 400
@@ -36,6 +36,9 @@ def pass_pipe(pipes):
     in_pipe = False
     for pipe_pair in pipes:
         for pipe in pipe_pair:
+            if pipe.right < 0:
+                pipes.remove(pipe_pair)
+                break
             if pipe.x == 80:
                 return True
     return False
@@ -54,11 +57,11 @@ def spawn_pipes(pipes):
     return pipes
 
 def get_high_score():
-    filename = os.getcwd() + r'\FlappyPy\Student\highscore.txt'
+    filename = os.getcwd() + r'\FlappyPy\Instructor\highscore.txt'
     with open(filename, 'r') as file:
         return int(file.readline())
 def set_high_score(score):
-    filename = os.getcwd() + r'\FlappyPy\Student\highscore.txt'
+    filename = os.getcwd() + r'\FlappyPy\Instructor\highscore.txt'
     with open(filename, 'w') as file:
         file.write(str(score))
 
