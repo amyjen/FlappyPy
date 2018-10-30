@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 >>>>>>> f0b22d450fca43d28d823ab3580cce0f5b5df0a0
 to install python on windows do the following:
-
+ - go to this url for the download and pick your operating system: https://www.python.org/downloads/release/python-370/
  - unzip the python installer
  - run the python installer MAKING SURE THE CHECKBOX "PATH" is checked
  - continue with the setup
