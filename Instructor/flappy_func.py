@@ -56,23 +56,12 @@ def spawn_pipes(pipes):
     pipes.append((top,bottom))
     return pipes
 
-def find_file_directory(name, path=os.getcwd()):
-    #print(os.path.basename(path))
-    if os.path.basename(path)==name:
-        return path
-    files = os.listdir(path)
-    for file in files:
-        if os.path.isdir(path+'\\'+file):
-            if find_file_directory(name, path+'\\'+file)!=None:
-                return find_file_directory(name, path+'\\'+file)
-    return None
-
 def get_record():
-    filename = find_file_directory('FlappyPy') + '/Instructor/highscore.txt'
+    filename = os.path.dirname(os.path.realpath(__file__)) + '/highscore.txt'
     with open(filename, 'r') as file:
         return int(file.readline())
 def set_record(score):
-    filename = find_file_directory('FlappyPy') + '/Instructor/highscore.txt'
+    filename = os.path.dirname(os.path.realpath(__file__)) + '/highscore.txt'
     with open(filename, 'w') as file:
         file.write(str(score))
 
@@ -81,3 +70,4 @@ def draw_score(screen, score):
 
 def draw_highscore(screen, highscore):
     screen.draw.text("highscore: "+str(highscore), (WIDTH/2, 5), color = (255,255,255))
+print(os.path.dirname(os.path.realpath(__file__)))
